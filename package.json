@@ -1,0 +1,12 @@
+{
+  "private": true,
+  "scripts": {
+    "build": "tstl",
+    "update-types": "nanosts generate -o=./@types"
+  },
+  "devDependencies": {
+    "typescript": "^4.6.4",
+    "typescript-to-lua": "^1.4.4",
+    "ts-node": "^10.9.1"
+  }
+}

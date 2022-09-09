@@ -1,0 +1,10 @@
+[package]
+    name = "nanos-ttt"
+    author = "NanosWorldTS Team"
+    version = "1.0.0"
+    image = ""
+    type = "game-mode"
+    force_no_map_script = false
+    auto_cleanup = true
+    packages_requirements = []
+    assets_requirements = []
