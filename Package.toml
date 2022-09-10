@@ -6,5 +6,5 @@
     type = "game-mode"
     force_no_map_script = false
     auto_cleanup = true
-    packages_requirements = []
+    packages_requirements = ["nanos-convars"]
     assets_requirements = []

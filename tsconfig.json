@@ -13,7 +13,8 @@
       ]
     },
     "types": [
-      "@typescript-to-lua/language-extensions"
+      "@typescript-to-lua/language-extensions",
+      "nanos-convars"
     ],
     "typeRoots": [
       "./node_modules/@types",

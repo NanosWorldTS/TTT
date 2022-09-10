@@ -1,6 +1,7 @@
 import Team from "../Team";
 import RoleOptions, {ConfigurableVariables} from "./RoleOptions";
 import {Package, Server} from "nanosts";
+import TTTPlayer from "../TTTPlayer";
 
 /**
  * The role describes the special abilities - if there are any - of a player, for which the player is fighting and
@@ -18,7 +19,7 @@ export default abstract class Role {
 
     /**
      * @param _team The {@link Team} that role belongs to.
-     * @param _name The name of the role. Should be lowercase and without spaces. Is used for i18n identification.
+     * @param _name The name of the role. Should be lowercase and without spaces. Must be unique. Is used for i18n identification.
      * @param opts  The options for the role.
      */
     protected constructor(
@@ -102,17 +103,68 @@ export default abstract class Role {
     }
 
     /**
+     * Gets called when the role is initialized.
+     */
+    public onInitialize(): void {}
+
+    /**
+     * Gets called when the given player is getting this role. Can be cancelled by returning false.
+     */
+    public onRoleAssigning(player: TTTPlayer, reason: RoleChangeReason): void|false {}
+
+    /**
+     * Gets called when the given player gets this role.
+     */
+    public onRoleAssigned(player: TTTPlayer, reason: RoleChangeReason): void {}
+
+    /**
+     * Gets called when the given player looses this role. Can be cancelled by returning false.
+     */
+    public onRoleRemoving(player: TTTPlayer, reason: RoleChangeReason): void|false {}
+
+    /**
+     * Gets called when the given player lost this role.
+     */
+    public onRoleRemoved(player: TTTPlayer, reason: RoleChangeReason): void {}
+
+    /**
      * Registers the given type as new role. The type must extend {@link Role} or any of its children.
      */
     public static register<T extends Role>(type: new () => T) {
         if (Server) {
             const data = Package.Require("../../../Server/Index.lua");
             const TTTServer = data.default;
-            TTTServer.instance.roleController.registerRole(type);
+            TTTServer.instance.roleManager.registerRole(type);
         } else {
             const data = Package.Require("../../../Client/Index.lua");
             const TTTClient = data.default;
-            TTTClient.instance.roleController.registerRole(type);
+            TTTClient.instance.roleManager.registerRole(type);
         }
     }
+}
+
+/**
+ * The reason which defines why the role of a player changes/changed.
+ */
+export enum RoleChangeReason {
+    /**
+     * The role changed manually through e.g. commands.
+     */
+    Manually,
+    /**
+     * The role was changed because the round started.
+     */
+    RoundStart,
+    /**
+     * The role was changed because the round ended.
+     */
+    RoundEnd,
+    /**
+     * The role was changed because the player died and now enters spectator mode.
+     */
+    Death,
+    /**
+     * The role was changed because through a script.
+     */
+    Script
 }

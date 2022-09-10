@@ -1,4 +1,4 @@
-import RoleController from "./Controllers/RoleController";
+import RoleManager from "./Roles/RoleManager";
 
 /**
  * The class representation for the server running the TTT gamemode.
@@ -6,24 +6,24 @@ import RoleController from "./Controllers/RoleController";
 export default class TTTServer {
 
     private static readonly _instance: TTTServer = new TTTServer();
-    private readonly _roleController: RoleController;
+    private readonly _roleManager: RoleManager;
 
     private constructor() {
-        this._roleController = new RoleController();
+        this._roleManager = new RoleManager();
     }
 
     /**
      * Initializes the server part of the TTT gamemode.
      */
     public initialize(): void {
-        this._roleController.initialize();
+        this._roleManager.initialize();
     }
 
     /**
-     * Returns the {@link RoleController} of this {@link TTTServer}.
+     * Returns the {@link RoleManager} of this {@link TTTServer}.
      */
-    public get roleController(): RoleController {
-        return this._roleController;
+    public get roleManager(): RoleManager {
+        return this._roleManager;
     }
 
     /**

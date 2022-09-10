@@ -5,6 +5,7 @@
     "update-types": "nanosts generate -o=./@types"
   },
   "devDependencies": {
+    "nanos-convars": "^1.0.0",
     "nanosts-imports-transpiler": "^0.0.1",
     "typescript": "^4.6.4",
     "typescript-to-lua": "^1.4.4"
