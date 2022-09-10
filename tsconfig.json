@@ -27,7 +27,7 @@
     "noImplicitSelf": true,
     "luaPlugins": [
       {
-        "name": "./transpilers/imports.ts"
+        "name": "nanosts-imports-transpiler"
       }
     ]
   },

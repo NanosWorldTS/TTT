@@ -1,8 +1,6 @@
 import Team from "../Team";
 import RoleOptions, {ConfigurableVariables} from "./RoleOptions";
-import {Server} from "nanosts";
-import TTTServer from "../../../Server";
-import TTTClient from "../../../Client";
+import {Package, Server} from "nanosts";
 
 /**
  * The role describes the special abilities - if there are any - of a player, for which the player is fighting and
@@ -108,8 +106,12 @@ export default abstract class Role {
      */
     public static register<T extends Role>(type: new () => T) {
         if (Server) {
+            const data = Package.Require("../../../Server/Index.lua");
+            const TTTServer = data.default;
             TTTServer.instance.roleController.registerRole(type);
         } else {
+            const data = Package.Require("../../../Client/Index.lua");
+            const TTTClient = data.default;
             TTTClient.instance.roleController.registerRole(type);
         }
     }
